@@ -22,24 +22,19 @@ const expected1 = [
   },
 ];
 
-const expected2 = [[
-  {
-    name: 'Ваня', type: 'Bowman', health: 100, level: 1, attack: 25, defence: 25,
-  },
-  {
-    name: 'Петя', type: 'Swordsman', health: 100, level: 1, attack: 40, defence: 10,
-  },
-  {
-    name: 'Ваня', type: 'Magician', health: 100, level: 1, attack: 40, defence: 10,
-  },
-], 'Ошибка! Такой персонаж уже добавлен!'];
-
 test('Test Team array', () => {
   const result = new Team().addAll(entrant1, entrant2, entrant3);
   expect(result[0]).toEqual(expected1);
 });
 
 test('Test Team error', () => {
-  const result = new Team().addAll(entrant1, entrant2, entrant3, entrant1);
-  expect(result).toEqual(expected2);
+  const result1 = new Team();
+  result1.member.add(entrant1, entrant2, entrant3);
+  const result = () => result1.add(entrant1);
+  expect(result).toThrowError('Ошибка! Такой персонаж уже добавлен!');
+});
+
+test('Test class Team on a output array', () => {
+  const result1 = new Team().addAll(entrant1, entrant2, entrant3);
+  expect(Array.isArray(result1)).toBeTruthy();
 });

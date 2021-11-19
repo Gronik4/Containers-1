@@ -2,22 +2,16 @@ export default class Team {
   constructor() {
     this.member = new Set();
     this.output = [];
-    this.err = '';
   }
 
   add(intern) {
-    try {
-      if (this.member.has(intern)) {
-        throw new Error('Ошибка! Такой персонаж уже добавлен!');
-      } else { this.member.add(intern); }
-    } catch (e) {
-      this.err = e.message;
-    }
+    if (this.member.has(intern)) {
+      throw new Error('Ошибка! Такой персонаж уже добавлен!');
+    } else { this.member.add(intern); }
   }
 
   addAll(...rest) {
-    const allMember = rest;
-    for (const item of allMember) {
+    for (const item of rest) {
       this.add(item);
     }
     this.toArray(this.member);
@@ -25,8 +19,6 @@ export default class Team {
   }
 
   toArray(set) {
-    for (const item of set) {
-      this.output.push(item);
-    }
+    this.output = Array.from(set);
   }
 }
